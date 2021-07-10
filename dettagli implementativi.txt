@@ -1,0 +1,28 @@
+Particolarità implementative
+
+Avventure di qualità
+Ogni avventura ha un gameplay migliorato grazie alle potenzialità del parser implementato.
+All'interno del package "parser" è presente la classe "parser.java" che, collaborando con la classe "parserOutput.java",
+permette l'elaborazione delle stringhe testuali acquistie durante una sessione di gioco.
+Il parser analizza la stringa in input, tokenizza ogni parola su ogni spazio bianco e crea una lista di token.
+In particolare, se una parola corrisponde ad un comando/oggetto questa avvalora un'apposita variabile, altrimenti viene considerata come "stop word" quindi
+viene automaticamente scartata, questa operazione permette all'utente di inserire comandi del tipo:"Vai a NORD poi vai ad EST" in cui le parole:"Vai", "a", "poi", 
+"vai", "ad" vengono escluse mentre "NORD" ed "EST" vengono riconosciuti come comandi.
+Successivamente, ogni qual volta vengono individuati dei comandi dalla lista, il parser, cerca nei token successivi degli oggetti correlati
+permettendo di unirne fino a due oggetti ad uno stesso comando (un oggetto nell'inventario e uno nella stanza) per permettere all'utente operazioni del tipo: "Usa chiavetta all'interno del pc" in cui "usa" è il comando e "chiavetta" e "pc" sono gli oggetti.
+Per ogni comando individuato, viene generato un oggetto di tipo "parserOutput" appositamente configurato con eventuali legami tra oggetti e comandi.
+Infine, il parser restituisce una lista di mosse da compiere corrispondenti alla frase inserita dall'utente.
+
+Avventure a tempo
+Nel package "type" è stato aggiunto un nuovo componente fondamentale per le avventure temporizzate, la classe "Timer.java".
+Un oggetto di tipo "Timer" utilizza dei metodi, basati sulla sincronizzazione dei thread (synchronized, vincola l'esecuzione del
+metodo ad un solo thread per volta), per calcolare il tempo di esecuzione intercorso dall'avvio del gioco.
+Nonostante la sua implementazione, temporizzare le avventure non è obbligatorio, difatti se l'"Engine" riconosce che un'avventura non ha avvalorato un oggetto
+di tipo "Timer", questo non imporrà limiti di tempo di gioco.
+
+Database, per aggiornamenti dinamici
+All'interno dell'avventura testuale le descrizioni inerenti i comandi, gli oggetti e le stanze sono caricati dinamicamente da un database, 
+in questo modo il progettista può aggiornare con più semplicità i dati di gioco evitando di accedere direttamente al codice sorgente.
+L'implementazione dei database è affidata ad "H2", un gestore di basi di dati relazionale, di cui è diponibile anche una console con cui è possibile
+interagire direttamente sulle tabelle del database.
+Per i giocatori invece è stata predisposta una funzione apposita che configura un database locale con i dati di gioco, qualora questo non sia presente.
